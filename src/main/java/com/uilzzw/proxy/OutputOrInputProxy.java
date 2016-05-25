@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import com.uilzzw.common.ConstantUtils;
-import com.uilzzw.utils.ProxyConstants;
 
 public class OutputOrInputProxy {
 
@@ -41,10 +40,10 @@ public class OutputOrInputProxy {
 			ConstantUtils.getLogger().info("Don't choose the directory;We use the default directory");
 			direc = System.getProperty("user.home");
 			ConstantUtils.getLogger().info("Directory Path is: [" + direc + "]");
-			filePath = System.getProperty("user.home") + "\\" + ProxyConstants.FILE_NAME;
+			filePath = System.getProperty("user.home") + "\\" + ConstantUtils.FILE_NAME;
 			ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
 		} else {
-			filePath += "\\" + ProxyConstants.FILE_NAME;
+			filePath += "\\" + ConstantUtils.FILE_NAME;
 			ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
 		}
 		if (ipAddrList == null || StringUtils.isBlank(filePath))
@@ -144,7 +143,7 @@ public class OutputOrInputProxy {
 	public static List<Map<String, String>> readProxyFromFile(String filePath) {
 		if (StringUtils.isBlank(filePath))
 			return null;
-		ConstantUtils.getLogger().info("The file path is::["+filePath+"]");
+		ConstantUtils.getLogger().info("The file path is::[" + filePath + "]");
 		File proxy = new File(filePath);
 		BufferedReader br = null;
 		List<Map<String, String>> ipList = new ArrayList<Map<String, String>>();
