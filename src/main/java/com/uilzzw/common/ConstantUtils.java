@@ -10,7 +10,7 @@ public class ConstantUtils {
 	public static final String VALIDATION_SITE = "http://www.baidu.com";
 	
 	//断言词汇
-	public static final String assertString="百度";
+	public static final String ASSERT="百度";
 	
     // 默认保存的文件名
     public static final String FILE_NAME = "proxy.txt";
