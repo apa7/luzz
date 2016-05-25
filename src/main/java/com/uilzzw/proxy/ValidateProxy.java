@@ -35,6 +35,7 @@ public class ValidateProxy {
 		RequestConfig proxyConfig = RequestConfig.custom().setProxy(proxy).build();
 		HttpGet httpGet = new HttpGet(validateSite);
 		httpGet.setConfig(proxyConfig);
+		ConstantUtils.getLogger().info("Validating proxy now,Please wait a moment.");
 		try {
 			CloseableHttpResponse response = httpClient.execute(proxy, httpGet);
 			String htmlText = EntityUtils.toString(response.getEntity(), "UTF-8");
