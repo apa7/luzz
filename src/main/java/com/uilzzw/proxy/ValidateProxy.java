@@ -15,19 +15,9 @@ import org.jsoup.select.Elements;
 import com.uilzzw.common.ConstantUtils;
 
 public class ValidateProxy {
-	/**
-	 * 
-	 * @param ipAddress
-	 *            代理地址
-	 * @param port
-	 *            端口
-	 * @param protocol
-	 *            协议
-	 * @param validateSite
-	 *            验证网址
-	 * @return
-	 */
-	public static boolean validationProxy(String ipAddress, int port, String protocol, String validateSite) {
+
+	public static boolean validationProxy(String ipAddress, int port, String protocol, String validateSite,
+			String assertString) {
 		if (StringUtils.isBlank(ipAddress))
 			return false;
 		if (StringUtils.isBlank(protocol))
@@ -40,18 +30,20 @@ public class ValidateProxy {
 			validateSite = validateSite.replace("https://", "http://");
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
+		// Add proxy
 		HttpHost proxy = new HttpHost(ipAddress, port, protocol);
-		RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
+		RequestConfig proxyConfig = RequestConfig.custom().setProxy(proxy).build();
 		HttpGet httpGet = new HttpGet(validateSite);
-		httpGet.setConfig(config);
+		httpGet.setConfig(proxyConfig);
 		try {
 			CloseableHttpResponse response = httpClient.execute(proxy, httpGet);
 			String htmlText = EntityUtils.toString(response.getEntity(), "UTF-8");
 			Document document = Jsoup.parse(htmlText);
 			Elements byTags = document.getElementsByTag("title");
 			for (Element element : byTags) {
-				if (element.text().contains("百度")) {
-					ConstantUtils.getLogger().info("Proxy [" + ipAddress + "] can used");
+				// default is baidu.com
+				if (element.text().trim().contains(assertString)) {
+					ConstantUtils.getLogger().info("Proxy [" + ipAddress + ":" + port + "," + protocol + "] can used");
 					return true;
 				}
 			}
