@@ -23,7 +23,7 @@ public class OutputOrInputProxy {
 	 * @param ipAddrList
 	 *            IP集合
 	 * @param filePath
-	 *            需要保存的路径-->最后一层目录不能带"\"
+	 *            需要保存的路径(最后一层目录带有无\均可)
 	 * @param isSaveIpAddr
 	 *            是否保存IP地址
 	 * @param isSavePort
@@ -36,20 +36,24 @@ public class OutputOrInputProxy {
 			boolean isSaveIpAddr, boolean isSavePort, boolean isSaveProtocol) {
 		String direc = filePath;
 		ConstantUtils.getLogger().info("Directory Path is: [" + direc + "]");
-		if (StringUtils.isBlank(filePath)) {
-			ConstantUtils.getLogger().info("Don't choose the directory;We use the default directory");
-			direc = System.getProperty("user.home");
-			ConstantUtils.getLogger().info("Directory Path is: [" + direc + "]");
-			filePath = System.getProperty("user.home") + "\\" + ConstantUtils.FILE_NAME;
-			ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
-		} else {
-			filePath += "\\" + ConstantUtils.FILE_NAME;
-			ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
-		}
 		if (ipAddrList == null || StringUtils.isBlank(filePath))
 			return false;
 		if (!isSaveIpAddr && !isSavePort && !isSaveProtocol)
 			return false;
+		if (StringUtils.isBlank(filePath)) {
+			ConstantUtils.getLogger().info("Don't choose the directory;We use the default directory");
+			direc = ConstantUtils.getUserHome();
+			ConstantUtils.getLogger().info("Directory Path is: [" + direc + "]");
+			filePath = ConstantUtils.getUserHome() + "\\" + ConstantUtils.FILE_NAME;
+			ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
+		} else {
+			if(filePath.endsWith("\\")){
+				filePath+=ConstantUtils.FILE_NAME;
+			}else{
+				filePath += "\\" + ConstantUtils.FILE_NAME;
+			}
+			ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
+		}
 		File directory = new File(direc);
 		if (!directory.exists()) {
 			directory.mkdir();
