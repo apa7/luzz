@@ -38,7 +38,7 @@ public class SpiderProxy {
 		nnGet.addHeader("User-Agent", userAgent);
 		try {
 			CloseableHttpResponse response = httpClient.execute(nnGet);
-			String htmlText = EntityUtils.toString(response.getEntity());
+			String htmlText = EntityUtils.toString(response.getEntity(),"UTF-8");
 			Document document = Jsoup.parse(htmlText);
 			// Element ipList = document.getElementById("ip_list");
 			List<HashMap<String, String>> ipAddrList = new ArrayList<HashMap<String, String>>();
