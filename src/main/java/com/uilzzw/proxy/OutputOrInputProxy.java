@@ -35,25 +35,25 @@ public class OutputOrInputProxy {
 	public static boolean writeContentToFile(List<HashMap<String, String>> ipAddrList, String filePath,
 			boolean isSaveIpAddr, boolean isSavePort, boolean isSaveProtocol) {
 		String direc = filePath;
+		if (StringUtils.isBlank(filePath)) {
+		    ConstantUtils.getLogger().info("Don't choose the directory;Will use the default directory");
+		    direc = ConstantUtils.getUserHome();
+		    ConstantUtils.getLogger().info("Directory Path is: [" + direc + "]");
+		    filePath = ConstantUtils.getUserHome() + "\\" + ConstantUtils.FILE_NAME;
+		    ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
+		} else {
+		    if(filePath.endsWith("\\")){
+			filePath+=ConstantUtils.FILE_NAME;
+		    }else{
+			filePath += "\\" + ConstantUtils.FILE_NAME;
+		    }
+		    ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
+		}
 		ConstantUtils.getLogger().info("Directory Path is: [" + direc + "]");
 		if (ipAddrList == null || StringUtils.isBlank(filePath))
 			return false;
 		if (!isSaveIpAddr && !isSavePort && !isSaveProtocol)
 			return false;
-		if (StringUtils.isBlank(filePath)) {
-			ConstantUtils.getLogger().info("Don't choose the directory;We use the default directory");
-			direc = ConstantUtils.getUserHome();
-			ConstantUtils.getLogger().info("Directory Path is: [" + direc + "]");
-			filePath = ConstantUtils.getUserHome() + "\\" + ConstantUtils.FILE_NAME;
-			ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
-		} else {
-			if(filePath.endsWith("\\")){
-				filePath+=ConstantUtils.FILE_NAME;
-			}else{
-				filePath += "\\" + ConstantUtils.FILE_NAME;
-			}
-			ConstantUtils.getLogger().info("proxy.txt absolute path is: [" + filePath + "]");
-		}
 		File directory = new File(direc);
 		if (!directory.exists()) {
 			directory.mkdir();
