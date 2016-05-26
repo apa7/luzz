@@ -32,7 +32,8 @@ public class ValidateProxy {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		// Add proxy
 		HttpHost proxy = new HttpHost(ipAddress, port, protocol);
-		RequestConfig proxyConfig = RequestConfig.custom().setProxy(proxy).build();
+		//set Timeout
+		RequestConfig proxyConfig = RequestConfig.custom().setProxy(proxy).setSocketTimeout(3000).setConnectionRequestTimeout(3000).setConnectTimeout(3000).build();
 		HttpGet httpGet = new HttpGet(validateSite);
 		httpGet.setConfig(proxyConfig);
 		ConstantUtils.getLogger().info("Validating proxy now,Please wait a moment.");
