@@ -17,7 +17,7 @@ public class CommonUtils {
      *            要拆分的个数
      * @return 结果集
      */
-    public static <T> List<List<T>> split(List<T> targetList, int count) {
+    public static <T> List<List<T>> split(List<T> targetList, int count) { 
 	if (targetList == null || count < 1)
 	    return null;
 	List<List<T>> result = new ArrayList<List<T>>();
