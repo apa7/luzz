@@ -5,16 +5,16 @@ import org.apache.log4j.Logger;
 public class ConstantUtils {
 
 	private static final Logger LOGGER = Logger.getLogger(ConstantUtils.class);
-	
-	//验证网址
+
+	// 验证网址
 	public static final String VALIDATION_SITE = "http://www.baidu.com";
-	
-	//断言词汇
-	public static final String ASSERT="百度";
-	
-    	// 默认保存的文件名
+
+	// 断言词汇
+	public static final String ASSERT = "百度";
+
+	// 默认保存的文件名
 	public static final String FILE_NAME = "proxy.txt";
-	
+
 	// 日志Logging
 	public static Logger getLogger() {
 		return LOGGER;
