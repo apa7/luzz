@@ -118,8 +118,9 @@ public class ValidateProxy implements Runnable{
 
     @Override
     public void run() {
-	System.out.println(Thread.currentThread().getName()+" is running");
+	ConstantUtils.getLogger().info(Thread.currentThread().getName()+" is running;");
 	boolean boo = validationProxy(getIpAddress(), getPort(), getProtocol(), getVilateSite(), getAssertString());
+	
 	System.out.println(boo);
     }
 }
