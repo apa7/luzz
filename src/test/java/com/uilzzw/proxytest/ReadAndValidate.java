@@ -2,7 +2,7 @@ package com.uilzzw.proxytest;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ExecutorService;
 import com.uilzzw.beans.ProxyEntity;
 import com.uilzzw.common.ConstantUtils;
 import com.uilzzw.proxy.OutputOrInputProxy;
@@ -14,8 +14,16 @@ public class ReadAndValidate {
 		String filePath = ConstantUtils.getUserHome() + "\\" + ConstantUtils.FILE_NAME;
 		List<Map<String, String>> list = OutputOrInputProxy.readProxyFromFile(filePath);
 		// new a threadPool
-		ScheduledExecutorService threadPool = CommonUtils.createThreadPool("ValidationPool", 100);
-		List<ProxyEntity> proxy = new ValidationTask().getCanUsedProxy(list, threadPool);
-		System.out.println(proxy);
+		List<List<Map<String,String>>> split = CommonUtils.split(list, 125);
+
+		System.out.println(split.size());
+		
+		
+		//ExecutorService threadPool = CommonUtils.createThreadPool("ValidationPool");
+		for (int i = 0; i < split.size(); i++) {
+			//List<ProxyEntity> list2 = new ValidationTask().getCanUsedProxy(split.get(i),threadPool);
+			List<ProxyEntity> list2 = new ValidationTask(CommonUtils.createThreadPool("ValidationPool")).getCanUsedProxy(split.get(i));
+			System.out.println(list2);
+		}
 	}
 }
