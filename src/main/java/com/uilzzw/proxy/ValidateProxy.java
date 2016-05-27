@@ -2,7 +2,6 @@ package com.uilzzw.proxy;
 
 import java.util.Date;
 import java.util.concurrent.Callable;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
