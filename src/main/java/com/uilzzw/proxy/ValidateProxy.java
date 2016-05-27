@@ -1,5 +1,6 @@
 package com.uilzzw.proxy;
 
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.lang3.StringUtils;
@@ -97,23 +98,23 @@ public class ValidateProxy implements Callable<ProxyEntity> {
 			String assertString) {
 		if (StringUtils.isBlank(ipAddress) || StringUtils.isBlank(protocol) || port <= 0 || port > 65535)
 			return false;
-
 		validateSite = StringUtils.isBlank(validateSite) ? ConstantUtils.VALIDATION_SITE : validateSite;
 		validateSite = validateSite.contains("https://") ? validateSite.replace("https://", "http://") : validateSite;
-
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		// Add proxy
 		HttpHost proxy = new HttpHost(ipAddress, port, protocol);
 		// set Timeout
-		RequestConfig proxyConfig = RequestConfig.custom().setProxy(proxy).setSocketTimeout(3000)
-				.setConnectionRequestTimeout(3000).setConnectTimeout(3000).build();
+		RequestConfig proxyConfig = RequestConfig.custom().setProxy(proxy).setSocketTimeout(5000)
+				.setConnectionRequestTimeout(5000).setConnectTimeout(5000).build();
 		HttpGet httpGet = new HttpGet(validateSite);
+		//set proxy
 		httpGet.setConfig(proxyConfig);
 		ConstantUtils.getLogger().info("Validating proxy now,Please wait a moment.");
 		try {
 			CloseableHttpResponse response = httpClient.execute(proxy, httpGet);
 			String htmlText = EntityUtils.toString(response.getEntity(), "UTF-8");
 			Document document = Jsoup.parse(htmlText);
+			//check title 
 			Elements byTags = document.getElementsByTag("title");
 			for (Element element : byTags) {
 				// default is baidu.com
@@ -124,7 +125,7 @@ public class ValidateProxy implements Callable<ProxyEntity> {
 			}
 			httpClient.close();
 		} catch (Exception e) {
-			ConstantUtils.getLogger().error("Proxy can't used", e);
+			ConstantUtils.getLogger().error("Proxy can't used");
 			return false;
 		}
 		return false;
@@ -140,7 +141,7 @@ public class ValidateProxy implements Callable<ProxyEntity> {
 		ConstantUtils.getLogger().info(Thread.currentThread().getName() + " is running;");
 		boolean boo = validationProxy(getIpAddress(), getPort(), getProtocol(), getVilateSite(), getAssertString());
 		// 0-Can used;1-Can't used;2-Don't Validate;3-Deleted;4-Died;5-Alived;
-		return boo ? new ProxyEntity(getIpAddress(), getPort(), protocol, 0) : new ProxyEntity(getIpAddress(),
-				getPort(), getProtocol(), 1);
+		return boo ? new ProxyEntity(getIpAddress(), getPort(), protocol, 0,new Date()) : new ProxyEntity(getIpAddress(),
+				getPort(), getProtocol(), 1,new Date());
 	}
 }
