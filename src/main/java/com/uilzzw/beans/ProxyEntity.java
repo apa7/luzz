@@ -103,11 +103,4 @@ public class ProxyEntity {
 		this.updateTime = updateTime;
 	}
 
-	@Override
-	public String toString() {
-		return "ProxyEntity [ipAddress=" + ipAddress + ", port=" + port + ", protocol=" + protocol + ", status="
-				+ status + ", createTime=" + createTime + ", validateTime=" + validateTime + ", updateTime="
-				+ updateTime + "]";
-	}
-	
 }
