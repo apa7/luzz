@@ -73,8 +73,7 @@ public class ValidationTask {
 	 * 
 	 * @param list
 	 *            从文件读取到的代理list
-	 * @param threadPool
-	 *            线程池
+	 * 
 	 * @return
 	 */
 	public List<ProxyEntity> getCanUsedProxy(List<Map<String, String>> list) {
