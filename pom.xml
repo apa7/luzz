@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.uilzzw</groupId>
 	<artifactId>spider-proxy</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<!-- Dependency Version -->
 	<properties>
 		<httpclient.version>4.5.1</httpclient.version>
